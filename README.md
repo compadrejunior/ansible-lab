@@ -3,15 +3,18 @@ Ansible commands, snippets and recipes for learning purpose
 
 ## Starting the Lab
   ```bash
-  cd diveintoansible-lab-master
+  cd diveintoansible-lab
   docker compose up
   ```
 
 ## Using the Lab
 1. Type localhost:1000 into your browser. You will see the lab home page.
-  
+  ![Ansible Lab Homepage](ansiblelab_homepage.png "Ansible Lab Homepage")
 2. Select Ubuntu-c
-3. Login with user ansible and password password
+  ![Ansible Lab Terminal](ansiblelab_terminal.png "Ansible Lab Terminal")
+3. You will see a terminal like screen
+   ![Ansible Lab Terminal Login](ansiblelab_terminal_login.png "Ansible Lab Terminal Login")
+4. Login with user ansible and password password
 
 ## Copying the password to instances
 1. Install sshpass
