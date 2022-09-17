@@ -8,7 +8,8 @@ Ansible commands, snippets and recipes for learning purpose
   ```
 
 ## Using the Lab
-1. Type localhost:1000 into your browser
+1. Type localhost:1000 into your browser. You will see the lab home page.
+  
 2. Select Ubuntu-c
 3. Login with user ansible and password password
 
@@ -46,4 +47,61 @@ Ansible commands, snippets and recipes for learning purpose
     ```bash
     ./copy-password.sh
     ```
-7. 
+
+## Test connectivity ty your instances
+1. Type in the following command to create your inventory and send a ping command to all instances.
+    ```bash
+    ansible -i,ubuntu1,ubuntu2,ubuntu3,centos1,centos2,centos3 all -m ping
+    ```
+    
+    > **Note**: the *ansible -i* command creates an inventory 
+    > and expect you to inform a file but instead you can send 
+    > the content of the file just by typing a comma right 
+    > after the i. The *all* parameter specifies that we will  
+    > use all instances. The *-m ping* specifies the module 
+    > that we will use. 
+2. The output should be similar to the example bellow:
+    ```bash
+    ubuntu3 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+    }
+    ubuntu2 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/bin/python3"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    ubuntu1 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/bin/python3"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    centos1 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/libexec/platform-python"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    centos2 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/libexec/platform-python"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    centos3 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/libexec/platform-python"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    ```
