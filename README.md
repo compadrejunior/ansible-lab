@@ -1,5 +1,21 @@
-# ansible-lab
+# Ansible Lab
 Ansible commands, snippets and recipes for learning purpose
+
+This tutorial uses Ansible Lab provided by [Dive Into Ansible](https://diveinto.com/)
+
+If you prefer to install your own environment, please refer to [Installing Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW).
+
+**Index**
+
+- [Ansible Lab](#ansible-lab)
+  - [Starting the Lab](#starting-the-lab)
+  - [Using the Lab](#using-the-lab)
+  - [Check Ansible Version](#check-ansible-version)
+  - [Ansible Configuration File](#ansible-configuration-file)
+    - [Creating a Priority 4 configuration file](#creating-a-priority-4-configuration-file)
+    - [Setting host_key_checking to false](#setting-host_key_checking-to-false)
+  - [Copying the password to instances](#copying-the-password-to-instances)
+  - [Test connectivity ty your instances](#test-connectivity-ty-your-instances)
 
 ## Starting the Lab
   ```bash
@@ -16,22 +32,65 @@ Ansible commands, snippets and recipes for learning purpose
    ![Ansible Lab Terminal Login](ansiblelab_terminal_login.png "Ansible Lab Terminal Login")
 4. Login with user ansible and password password
 
+## Check Ansible Version
+1. To check the version just type the following command:
+    
+    ```bash
+    ansible --version
+    ```
+2. Note that Ansible is not using a configuration file.
+   
+   ![Ansible Version](ansiblelab_version_noconfig.png "Ansible Version")
+## Ansible Configuration File
+Ansible uses a configuration file that can be set in many places. Each path containing a configuration file determines the priority configuration Ansible will respect. 
+
+![Ansible Configuration File Priority](ansiblelab_configfile_priority.png "Ansible Configuration File Priority")
+### Creating a Priority 4 configuration file
+1. Create a configuration file with the commands bellow:
+       
+    ```bash
+    sudo mkdir /etc/ansible
+    sudo touch /etc/ansible/ansible.cfg
+    ```
+2. Logout and login again.
+3. Type ansible --version and check the configuration file is set. 
+
+    ![Ansible version configuration file set](ansiblelab_version_withconfig.png "Ansible version configuration file set")
+
+### Setting host_key_checking to false
+Setting host_key_checking to false will prevent fingerprint check on a new host. 
+
+1. Edit your ansible.cfg file and add the following line
+    ```ini
+    host_key_checking=false
+    ```
+2. Save and exit the file.
+3. Logout and login again
 ## Copying the password to instances
+This procedure helps to send commands through ssh without the need to inform your password every time. 
 1. Install sshpass
    
     ```bash
     sudo apt update
     sudo apt install sshpass
     ```
-2. Create a password file with text password
+2. Create an ssh key pair
+   
+   ```bash
+   ssh-keygen
+   ```
+
+3. Press enter to confirm each default option until the command finishes. 
+   
+4. Create a password file with text password
     ```bash
     echo password > password.txt
     ```
-3. Create a shell script with name copy-password.sh
+5. Create a shell script with name copy-password.sh
     ```bash
     vi copy-password.sh
     ```
-4. Paste the following content
+6. Paste the following content
     ```bash
     #!/bin/bash
     for user in ansible root
@@ -45,8 +104,11 @@ Ansible commands, snippets and recipes for learning purpose
       done
     done
     ```
-5. Save the file and exit vi.
-6. Execute the script
+
+    > The StrictHostKeyChecking=no prevents ssh to ask for fingerprint 
+    > confirmation. 
+7. Save the file and exit vi.
+8. Execute the script
     ```bash
     ./copy-password.sh
     ```
@@ -108,3 +170,4 @@ Ansible commands, snippets and recipes for learning purpose
         "ping": "pong"
     }
     ```
+
